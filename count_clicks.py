@@ -6,7 +6,6 @@ import requests
 from dotenv import load_dotenv
 
 
-BITLY_TOKEN = os.getenv("BITLY_TOKEN")
 URL = "https://api-ssl.bitly.com/v4/bitlinks"
 
 
@@ -28,6 +27,7 @@ def count_clicks(token, url, headers, params):
 
 if __name__ == "__main__":
     load_dotenv()
+    billy_token = os.getenv("BITLY_TOKEN")
     parser = argparse.ArgumentParser(description="1. Сокращает ссылки. 2. Выводит кол - во кликов по короткой - ссылке.")
     parser.add_argument("link", help="Ссылка на сайт")
     args = parser.parse_args()
