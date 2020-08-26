@@ -31,15 +31,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="1. Сокращает ссылки. 2. Выводит кол - во кликов по короткой - ссылке.")
     parser.add_argument("link", help="Ссылка на сайт")
     args = parser.parse_args()
-    custom_link = args.link
-    url_count = "{}/{}/clicks/summary".format(URL, custom_link[8:])
-    headers = {"Authorization": "Bearer {}".format(BITLY_TOKEN)}
+    link = args.link
+    url_count = "{}/{}/clicks/summary".format(URL, link[8:])
+    headers = {"Authorization": "Bearer {}".format(billy_token)}
     params = {"unit": "day", "units": "-1"}
-    payload = {"long_url": custom_link}
+    payload = {"long_url": link}
 
-    if custom_link.startswith("bit.ly", 8):
+    if link.startswith("bit.ly", 8):
         try:
-            clicks_count = count_clicks(BITLY_TOKEN, url_count, headers, params)
+            clicks_count = count_clicks(billy_token, url_count, headers, params)
         except requests.exceptions.HTTPError as error:
             print("Неправильная ссылка.")
             print("Ответ: {content}".format(content=error.response.content))
@@ -47,9 +47,9 @@ if __name__ == "__main__":
             print("По вашей ссылке прошли {} раз(а).".format(clicks_count))
     else:
         try:
-            bitlink = shorten_link(BITLY_TOKEN, URL, headers, payload)
+            bit_link = shorten_link(billy_token, URL, headers, payload)
         except requests.exceptions.RequestException as error:
             print("Неправильная ссылка.")
             print("Ответ: {content}".format(content=error.response.content))
         else:
-            print("Короткая ссылка: {}".format(bitlink))
+            print("Короткая ссылка: {}".format(bit_link))
