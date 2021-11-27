@@ -1,5 +1,4 @@
 import os
-import logging
 import argparse
 
 import requests
@@ -28,7 +27,8 @@ def count_clicks(token, url, headers, params):
 if __name__ == "__main__":
     load_dotenv()
     billy_token = os.getenv("BITLY_TOKEN")
-    parser = argparse.ArgumentParser(description="1. Сокращает ссылки. 2. Выводит кол - во кликов по короткой - ссылке.")
+    parser = argparse.ArgumentParser(description="""1. Сокращает ссылки.
+        2. Выводит кол - во кликов по короткой - ссылке.""")
     parser.add_argument("link", help="Ссылка на сайт")
     args = parser.parse_args()
     link = args.link
@@ -39,7 +39,8 @@ if __name__ == "__main__":
 
     if link.startswith("bit.ly", 8):
         try:
-            clicks_count = count_clicks(billy_token, url_count, headers, params)
+            clicks_count = count_clicks(billy_token, url_count, headers,
+                                        params)
         except requests.exceptions.HTTPError as error:
             print("Неправильная ссылка.")
             print("Ответ: {content}".format(content=error.response.content))
